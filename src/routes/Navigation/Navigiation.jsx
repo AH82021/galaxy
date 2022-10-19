@@ -1,9 +1,17 @@
-import { Fragment } from "react";
+import { Fragment,useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { ReactComponent as Galaxylogo } from "../../assets/galaxyStyle.svg";
 import '../Navigation/Navigation.styles.scss'
+import { UserContext } from "../../components/context/user.context";
+import { signOutUser } from "../../utils/firebase/Firebase.utils";
 
 const Navigiation = () => {
+  const {currentUser,setCurrentUser } = useContext(UserContext)
+  const singOutHandler = async () =>{
+ setCurrentUser(null);
+
+  }
+  // console.log(currentUser);
   return (
     <Fragment>
       <div className="navbar">
@@ -15,9 +23,10 @@ const Navigiation = () => {
           <Link className="nav-link" to="/shop">
             Shop
           </Link>
-          <Link className="nav-link" to="/signIn">
+          {currentUser ? (<span className="nav-link" onClick={singOutHandler}>SIGN OUT</span>): (  <Link className="nav-link" to="/auth">
             Sign In
           </Link>
+          )}
         </div>
       </div>
       <Outlet />

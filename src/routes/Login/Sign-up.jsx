@@ -1,9 +1,10 @@
 
 import { createAuthUserWithEmailAndPassword ,createUserDocumentFromAuth } from "../../utils/firebase/Firebase.utils";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import FormInput from '../../components/formInput/FormInput'
 import './Sign-up-styles.scss'
 import Button from "../../components/Button/Button";
+import { UserContext } from "../../components/context/user.context";
 
 const defaultInputFields = {
   displayName: ' ',
@@ -16,9 +17,7 @@ const SignUp = () => {
   const [inputFields, setInputFields] = useState(defaultInputFields)
 
   const {displayName, email, password, confirmPassword}= inputFields;
-
-  console.log(inputFields);
-
+  const {setCurrentUser} = useContext(UserContext)
   const resetInputFields = () => { setInputFields(defaultInputFields) }
   const handleSubmit = async (event) => {
     //avoid defalut behavior of form
@@ -28,8 +27,9 @@ const SignUp = () => {
     try {
       const {user}= createAuthUserWithEmailAndPassword(email,password);
       await createUserDocumentFromAuth(user,{displayName})
+      setCurrentUser(user)
       resetInputFields();
-      console.log({user});
+   
     } catch (error) {
       console.log(error.code);
       if(error.code === 'auth/email-already-in-use'){
@@ -47,7 +47,7 @@ const SignUp = () => {
   return (
     <div className="sign-up-contianer">
       <h2>Don't have an account?</h2>
-      <span>Sign up with Emain and Password</span>
+      <span>Sign up with Email and Password</span>
       <form  onSubmit={handleSubmit}>
       
         <FormInput label="Display Name" type="text" onChange={handleChange} name="displayName" value={displayName}   required/>

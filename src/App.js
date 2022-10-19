@@ -4,7 +4,7 @@ import "./categories.styles.scss";
 import { Routes, Route } from "react-router-dom";
 import Home from "./routes/home/HomeComponent";
 import Navigiation from "./routes/Navigation/Navigiation";
-import SignIn from "./routes/Login/Sign-in";
+ import Authentication from './routes/Login/Authentication'
 
 const Shop = () => {
   return (
@@ -20,7 +20,7 @@ const App = () => {
       <Route path="/" element={<Navigiation />}>
         <Route index element={<Home />} />
         <Route path="shop" element={<Shop />} />
-        <Route path="signIn" element={<SignIn />} />
+        <Route path="auth" element={<Authentication />} />
       </Route>
     </Routes>
   );

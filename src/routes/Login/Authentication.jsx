@@ -1,11 +1,10 @@
 
 import {signInWithGooglePopup,createUserDocumentFromAuth} from '../../utils/firebase/Firebase.utils'
-
-import {getIdTokenResult, getRedirectResult}from 'firebase/auth'
-import { async } from '@firebase/util'
+import './Sign-in/Authentication.styles.scss'
 import SignUp from './Sign-up'
+import SignIn from './Sign-in/Sign-in'
 
-const SignIn = () => {
+const Authentication = () => {
  
   const logGoogleUser = async ()=> {
     const {user} = await signInWithGooglePopup()
@@ -13,12 +12,11 @@ const SignIn = () => {
   }
   
   return (
-    <div>
-      <h1>Sign In Page</h1>
-      <button onClick={logGoogleUser}>Sign in with Google Popup</button>
+    <div className='authentication-contianer'>
+      <SignIn/>
       <SignUp />
     </div>
   )
 }
 
-export default SignIn
+export default Authentication
